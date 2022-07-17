@@ -1,4 +1,4 @@
-// 오른쪽 모터 엔코더 위치 제어
+// 오른쪽 모터 엔코더 위치 제어 //
 
 #define encoderPinA  2 // 인터럽트에 쓸 수 있는 디지털 핀
 #define encoderPinB 3 // 인터럽트에 쓸 수 있는 디지털 핀
