@@ -5,7 +5,8 @@
 #define driverIn4 10
 #define driverPwmR 11
 
-
+int distance;
+int data;
 void setup() {
    
     Serial.begin(115200);
@@ -52,7 +53,7 @@ void setup() {
         digitalWrite(driverIn4, LOW);
         analogWrite(driverPwmR, 200);
       }
-      Serial.println(driverPwmR)
+      Serial.println(driverPwmR);
       Serial.print(distance);
       Serial.print("cm");
 
