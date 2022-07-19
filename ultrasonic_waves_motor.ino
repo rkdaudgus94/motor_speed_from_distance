@@ -16,14 +16,13 @@ void setup() {
     pinMode(driverIn4, OUTPUT);
     pinMode(driverPwmR, OUTPUT);
     pinMode(A0, INPUT);
-    pinMode(A1, INTPUT);
   }
 
   void loop() {
-    while (Serial.avaliable()) {
+    while (Serial.available()) {
     data = Serial.read(); // 데이터를 읽어서 'data'를 저장
     }
-    if (data == '1') {
+    if (data == 'a') {
       digitalWrite(TRIG, LOW);
       delay(500);
       digitalWrite(TRIG, HIGH);
@@ -31,7 +30,7 @@ void setup() {
       digitalWrite(TRIG, LOW);
 
       long distance = pulseIn(ECHO, HIGH) / 58.2;
-      Serial.println(distance) // 데이터를 시리얼 통신으로 전송
+      Serial.println(distance); // 데이터를 시리얼 통신으로 전송
 
       if (distance < 10) {
         digitalWrite(driverIn3, HIGH);
@@ -55,7 +54,7 @@ void setup() {
       }
       Serial.println(driverPwmR);
       Serial.print(distance);
-      Serial.print("cm");
+   
 
       delay(100);
 }
