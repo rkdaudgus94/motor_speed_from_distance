@@ -17,11 +17,11 @@ void setup() {
 
 void loop() {
   digitalWrite(TRIG, LOW);
-  delayMicroseconds(2);
+  delay(500);
   digitalWrite(TRIG, HIGH);
-  delayMicroseconds(10);
+  delay(500);
   digitalWrite(TRIG, LOW);
-
+  
   long distance = pulseIn(ECHO, HIGH) / 58.2;
 
   if (distance < 10) {

@@ -13,3 +13,12 @@ while True :
     if (num == '1'):
         num = num.encode('utf-8')
         ard.write(num)
+
+    
+    distance = ard.readline()
+    distance = data[:-2].decode()
+    print(distance)
+
+    speed = ard.readline()
+    speed = data[:-2].decode
+    print(speed)
