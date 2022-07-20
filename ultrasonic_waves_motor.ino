@@ -7,8 +7,7 @@
 
 int data;
 int data1;
-float pwm;
-
+int pwm;
 float distance;
 
 void distance_motor();
@@ -38,9 +37,6 @@ void loop() {
   }
 }
 
-
-
-
 void distance_motor() {
   digitalWrite(TRIG, LOW);
   delay(10);
@@ -54,29 +50,31 @@ void distance_motor() {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 0); // 0% Duty Cycle
-    pwm = 0 * 100;
+    pwm = 0;
   }
-  else if (10 <= distance < 20) {
+  else if (distance < 20) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 64); // 25% Duty Cycle
-    pwm = 64 / 255 * 100;
+    pwm = 25;
   }
-  else if (20 <= distance < 30) {
+  else if (distance < 30) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 127); // 50% Duty Cycle
-    pwm = 127 / 255 * 100;
+    pwm = 50 ;
   }
-  else if (distance > 30) {
+  else  {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 255 / 255 * 100;
+    pwm = 100;
   }
+
   Serial.print(distance);
   Serial.print("cm");
   Serial.println(pwm);
 
   delay(1000);
 }
+
