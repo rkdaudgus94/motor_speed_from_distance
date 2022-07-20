@@ -11,7 +11,7 @@ ard = serial.Serial(port, brate)
 dis = []
 spd = []
 t = []
-
+t0 = 0
 def show_plot() :
     plt.subplot(211)
     plt.plot(t,dis,label='distance')
@@ -19,6 +19,8 @@ def show_plot() :
     plt.grid()
     plt.xlabel('t(sec)')
     plt.ylabel('distance(cm)')
+    plt.ylim(0,40)
+
 
     plt.subplot(212)
     plt.plot(t,spd,label='speed')
@@ -26,6 +28,7 @@ def show_plot() :
     plt.grid()
     plt.xlabel('t(sec)')
     plt.ylabel('speed(%)')
+    plt.ylim(0,100)
     
 
 
@@ -42,13 +45,15 @@ try :
             distance = data.decode()[:-7]
             speed = data.decode()[-4:-2]
             distance = float(distance)
+            if distance >= 40 :
+                distance = 40
             speed = float(speed)
             print(distance,"cm",speed,'(pwm)')
             dis = np.append(dis,distance)
             spd = np.append(spd,speed)
-            t = np.append(t,0.5)
+            t0 = t0 + 1
+            t = np.append(t, t0)
             
-            # dis = int(distance)
             drawnow(show_plot)
 except KeyboardInterrupt :
     num = 0
