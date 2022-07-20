@@ -6,7 +6,8 @@
 #define driverPwmR 11
 
 int data;
-int pwm;
+int data1;
+float pwm;
 
 float distance;
 
@@ -24,31 +25,21 @@ void setup() {
 void loop() {
   if (Serial.available()) {
     data = Serial.read(); // 데이터를 읽어서 'data'를 저장
+  }
+  while (data == '1') {
+    Serial.available();
+    data1 = Serial.read();
+    distance_motor();
 
-    while (data == '1') {
-      distance_motor();
-
-      if (Serial.available()) {
-        data = Serial.read();
-
-        if (data == '0') {
-          digitalWrite(TRIG, LOW);
-          delay(10);
-          digitalWrite(TRIG, LOW);
-          delay(10);
-          digitalWrite(TRIG, LOW);
-
-          float distance = pulseIn(ECHO, LOW) / 58.8;
-
-          digitalWrite(driverIn3, LOW);
-          digitalWrite(driverIn4, LOW);
-          analogWrite(driverPwmR, 0); // 0% Duty Cycle
-          break;
-        }
-      }
+    if (data1 == '0') {
+      Serial.print("break");
+      break;
     }
   }
 }
+
+
+
 
 void distance_motor() {
   digitalWrite(TRIG, LOW);
@@ -84,8 +75,8 @@ void distance_motor() {
     pwm = 255 / 255 * 100;
   }
   Serial.print(distance);
-  Serial.print("  ");
+  Serial.print("cm");
   Serial.println(pwm);
 
-  delay(500);
+  delay(1000);
 }
