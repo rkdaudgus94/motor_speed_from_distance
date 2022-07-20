@@ -15,15 +15,16 @@ try :
         ard.write(num1) # num 의 값을 아두이노에 전송
         while num == '1' :
             distance = ard.readline()
-            distance = distance.decode()
-            print(distance)
+            distance = distance.decode()[:-6]
+            distance = float(distance)
+            print(distance,"cm")
             # dis = int(distance)
 
 except KeyboardInterrupt :
     num = 0
     ard.write(num)
     print('end')
-    sys.exit()
+    exit()
     
     
     # speed = ard.readline()
