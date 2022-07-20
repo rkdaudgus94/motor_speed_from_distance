@@ -46,11 +46,6 @@ void loop() {
           break;
         }
       }
-      Serial.print(distance);
-      Serial.print("  ");
-      Serial.println(pwm);
-
-      delay(500);
     }
   }
 }
@@ -70,13 +65,13 @@ void distance_motor() {
     analogWrite(driverPwmR, 0); // 0% Duty Cycle
     pwm = 0 * 100;
   }
-  else if (distance < 20) {
+  else if (10 <= distance < 20) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 64); // 25% Duty Cycle
     pwm = 64 / 255 * 100;
   }
-  else if (distance < 30) {
+  else if (20 <= distance < 30) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 127); // 50% Duty Cycle
@@ -88,4 +83,9 @@ void distance_motor() {
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
     pwm = 255 / 255 * 100;
   }
+  Serial.print(distance);
+  Serial.print("  ");
+  Serial.println(pwm);
+
+  delay(500);
 }
