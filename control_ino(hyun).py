@@ -13,7 +13,7 @@ try :
     while True :
         num = num.encode('utf-8')
         ard.write(num) # num 의 값을 아두이노에 전송
-        while num == 1 :
+        while num == '1' :
             distance = ard.readline()
             distance = distance[:-2].decode()
             print(distance)
@@ -21,6 +21,7 @@ try :
 
 except KeyboardInterrupt :
     num = 0
+    num = num.encode('utf-8')
     ard.write(num)
     print('end')
     sys.exit()
