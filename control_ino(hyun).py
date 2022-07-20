@@ -7,15 +7,15 @@ brate = 9600
 ard = serial.Serial(port, brate)
 dis = []
 spd = []
-print('a을 입력하면 작동')
+print('1을 입력하면 작동')
 num= input()
 try : 
     while True :
         num1 = num.encode('utf-8')
         ard.write(num1) # num 의 값을 아두이노에 전송
-        while num == 'a' :
+        while num == '1' :
             distance = ard.readline()
-            # distance = distance[:-2].decode()
+            distance = distance.decode()
             print(distance)
             # dis = int(distance)
 
