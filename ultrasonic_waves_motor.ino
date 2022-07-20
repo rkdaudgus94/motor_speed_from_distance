@@ -7,11 +7,9 @@
 
 int distance;
 int data;
-int pwm;
-int dis;
 void setup() {
    
-    Serial.begin(9600);
+    Serial.begin(115200);
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
     pinMode(driverIn3, OUTPUT);
@@ -24,43 +22,40 @@ void setup() {
     while (Serial.available()) {
     data = Serial.read(); // 데이터를 읽어서 'data'를 저장
     }
-    
-      digitalWrite(TRIG, HIGH);
-      delay(10);
+    if (data == 'a') {
       digitalWrite(TRIG, LOW);
-    
-      float distance = pulseIn(ECHO, HIGH)/58.8;
-     
+      delay(500);
+      digitalWrite(TRIG, HIGH);
+      delay(500);
+      digitalWrite(TRIG, LOW);
+
+      long distance = pulseIn(ECHO, HIGH) / 58.2;
+      Serial.println(distance); // 데이터를 시리얼 통신으로 전송
 
       if (distance < 10) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
         analogWrite(driverPwmR, 0);
-        
       }
       else if (distance < 20) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
         analogWrite(driverPwmR, 50);
-       
       }
       else if (distance < 30) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
-        analogWrite(driverPwmR, 125);
-        
+        analogWrite(driverPwmR, 100);
       }
       else if (distance > 30) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
-        analogWrite(driverPwmR, 255);
-       
+        analogWrite(driverPwmR, 200);
       }
-      dis = analogRead(distance);
-      pwm = analogRead(driverPwmR);
-      Serial.println(dis);
-      Serial.println(pwm);
+      Serial.println(driverPwmR);
+      Serial.print(distance);
+   
 
       delay(100);
-
+}
 }
