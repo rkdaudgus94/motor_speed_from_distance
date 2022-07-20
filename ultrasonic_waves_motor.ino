@@ -3,13 +3,10 @@
 
 #define driverIn3 9
 #define driverIn4 10
-#define druverPwmR 11
+#define driverPwmR 11
 
-int driverPwmR;
-int distance;
 int data;
-int pwm;
-int dis;
+
 void setup() {
    
     Serial.begin(9600);
@@ -17,21 +14,21 @@ void setup() {
     pinMode(ECHO, INPUT);
     pinMode(driverIn3, OUTPUT);
     pinMode(driverIn4, OUTPUT);
-    pinMode(driverPwmR, OUTPUT);
+    analogRead(driverPwmR);
   }
 
 void loop() {
     while (Serial.available()) {
       data = Serial.read(); // 데이터를 읽어서 'data'를 저장
     }
-    if (data == '1') {
+    while (data == '1') {
       digitalWrite(TRIG, LOW);
       delay(10);
       digitalWrite(TRIG, HIGH);
       delay(10);
       digitalWrite(TRIG, LOW);
     
-      float distance = pulseIn(ECHO, HIGH)/58.8;
+      float distance = pulseIn(ECHO, HIGH) / 58.8;
      
 
       if (distance < 10) {
@@ -44,26 +41,27 @@ void loop() {
       else if (distance < 20) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
-        analogWrite(driverPwmR, 50);
-      // pwm = 50;
+        analogWrite(driverPwmR, 50); // pwm = 50;
       }
       else if (distance < 30) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
-        analogWrite(driverPwmR, 125);
-      // pwm = 125;
+        analogWrite(driverPwmR, 125); // pwm = 125;
       }
       else if (distance > 30) {
         digitalWrite(driverIn3, HIGH);
         digitalWrite(driverIn4, LOW);
-        analogWrite(driverPwmR, 255);
-       //pwm = 255;
+        analogWrite(driverPwmR, 255); //pwm = 255;
       }
-      int pwm = analogRead(driverPwmR);
+       else if (data == '0') {
+        digitalWrite(driverIn3, LOW);
+        digitalWrite(driverIn4, LOW);
+        analogWrite(driverPwmR, 0); //pwm = 0
+        break;
+      }
       Serial.print(distance);
-      Serial.print("cm");
-      Serial.print(pwm);
-      Serial.println(".");
+      Serial.print(" ");
+      Serial.println(driverPwmR);
 
       delay(100);
     }
