@@ -7,7 +7,7 @@
 
 int data;
 int data1;
-int pwm;
+float pwm;
 float distance;
 
 void distance_motor();
@@ -50,25 +50,25 @@ void distance_motor() {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 0); // 0% Duty Cycle
-    pwm = 0;
+    pwm = 0/2.5500;
   }
   else if (distance < 20) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 64); // 25% Duty Cycle
-    pwm = 25;
+    pwm = 64/2.55;
   }
   else if (distance < 30) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 127); // 50% Duty Cycle
-    pwm = 50 ;
+    pwm = 127/2.55 ;
   }
   else  {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 100;
+    pwm = 255/2.55;
   }
 
   Serial.print(distance);
