@@ -2,8 +2,8 @@ import serial
 import time
 
 
-port = 'COM3'
-brate = 115200
+port = 'COM5'
+brate = 9600
 ard = serial.Serial(port, brate)
 dis = []
 spd = []
@@ -15,9 +15,9 @@ try :
         ard.write(num1) # num 의 값을 아두이노에 전송
         while num == 'a' :
             distance = ard.readline()
-            distance = distance[:-2].decode()
+            # distance = distance[:-2].decode()
             print(distance)
-            dis = int(distance)
+            # dis = int(distance)
 
 except KeyboardInterrupt :
     num = 0
