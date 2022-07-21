@@ -5,7 +5,7 @@ import numpy as np
 from drawnow import *
 
 
-port = 'COM5'
+port = 'COM3'
 brate = 9600
 ard = serial.Serial(port, brate)
 dis = []
@@ -43,7 +43,7 @@ try :
         while num == '1' :
             data = ard.readline()
             distance = data.decode()[:-8]
-            speed = data.decode()[-4:-2]
+            speed = data.decode()[-5:-2]
             distance = float(distance)
             if distance >= 40 :
                 distance = 40
