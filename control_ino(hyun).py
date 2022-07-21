@@ -47,7 +47,7 @@ try :
             distance = float(distance)
             if distance >= 40 :
                 distance = 40
-            speed = float(speed)
+            speed = int(speed)
             print(distance,"cm",speed,'(pwm)')
             dis = np.append(dis,distance)
             spd = np.append(spd,speed)
