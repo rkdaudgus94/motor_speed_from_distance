@@ -43,7 +43,7 @@ try :
         while num == '1' :
             data = ard.readline()
             distance = data.decode()[:-8]
-            speed = data.decode()[-5:-2]
+            speed = data.decode()[-6:-2]
             distance = float(distance)
             if distance >= 40 :
                 distance = 40
