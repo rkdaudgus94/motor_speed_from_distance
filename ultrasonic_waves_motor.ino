@@ -35,6 +35,9 @@ void loop() {
       }
     }
   }
+  digitalWrite(driverIn3, LOW);
+  digitalWrite(driverIn4, LOW);
+  analogWrite(driverPwmR, 0); // 100% Duty Cycle
 }
 
 void distance_motor() {
@@ -125,5 +128,5 @@ void distance_motor() {
     Serial.print("   ");
     Serial.println(pwm);
   }
-  delay(500);
+  delay(1000);
 }
