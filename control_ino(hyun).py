@@ -42,7 +42,7 @@ try :
         ard.write(num1) # num 의 값을 아두이노에 전송
         while num == '1' :
             data = ard.readline()
-            distance = data.decode()[:-8]
+            distance = data.decode()[:-8] #**30cm**50\n 
             speed = data.decode()[-6:-2]
             distance = float(distance)
             if distance >= 40 :
@@ -57,7 +57,8 @@ try :
             drawnow(show_plot)
 except KeyboardInterrupt :
     num = 0
-    ard.write(num)
+    num0 = num.encode('utf-8')
+    ard.write(num0)
     print('end')
     exit()
     

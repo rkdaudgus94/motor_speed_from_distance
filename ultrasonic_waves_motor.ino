@@ -48,6 +48,9 @@ void distance_motor() {
   digitalWrite(TRIG, LOW);
 
   distance = pulseIn(ECHO, HIGH) / 58.8;
+  if (distance >= 50) {
+    distance = 50;
+  }
 
   if (distance < 10) {
     digitalWrite(driverIn3, HIGH);
@@ -82,7 +85,7 @@ void distance_motor() {
     Serial.print("  ");
     Serial.println(pwm);
   }
-  else if (distance < 100) {
+  else                   {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
@@ -94,39 +97,39 @@ void distance_motor() {
     Serial.println(pwm);
   }
 
-  else if (distance < 1000) {
-    digitalWrite(driverIn3, HIGH);
-    digitalWrite(driverIn4, LOW);
-    analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 100;
-    Serial.print(" ");
-    Serial.print(distance);
-    Serial.print("cm");
-    Serial.print(" ");
-    Serial.println(pwm);
-  }
-  else if (distance < 10000) {
-    digitalWrite(driverIn3, HIGH);
-    digitalWrite(driverIn4, LOW);
-    analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 100;
-    Serial.print(distance);
-    Serial.print("cm");
-    Serial.print(" ");
-    Serial.println(pwm);
-  }
+  // else if (distance < 1000) {
+  //   digitalWrite(driverIn3, HIGH);
+  //   digitalWrite(driverIn4, LOW);
+  //   analogWrite(driverPwmR, 255); // 100% Duty Cycle
+  //   pwm = 100;
+  //   Serial.print(" ");
+  //   Serial.print(distance);
+  //   Serial.print("cm");
+  //   Serial.print(" ");
+  //   Serial.println(pwm);
+  // }
+  // else if (distance < 10000) {
+  //   digitalWrite(driverIn3, HIGH);
+  //   digitalWrite(driverIn4, LOW);
+  //   analogWrite(driverPwmR, 255); // 100% Duty Cycle
+  //   pwm = 100;
+  //   Serial.print(distance);
+  //   Serial.print("cm");
+  //   Serial.print(" ");
+  //   Serial.println(pwm);
+  // }
 
-  else if (distance > 10000) {
-    distance = pulseIn(ECHO, LOW);
-    digitalWrite(driverIn3, LOW);
-    digitalWrite(driverIn4, LOW);
-    analogWrite(driverPwmR, 0); // 100% Duty Cycle
-    pwm = 0;
-    Serial.print("   ");
-    Serial.print(distance);
-    Serial.print("cm");
-    Serial.print("   ");
-    Serial.println(pwm);
-  }
+  // else if (distance > 10000) {
+  //   distance = pulseIn(ECHO, LOW);
+  //   digitalWrite(driverIn3, LOW);
+  //   digitalWrite(driverIn4, LOW);
+  //   analogWrite(driverPwmR, 0); // 100% Duty Cycle
+  //   pwm = 0;
+  //   Serial.print("   ");
+  //   Serial.print(distance);
+  //   Serial.print("cm");
+  //   Serial.print("   ");
+  //   Serial.println(pwm);
+  // }
   delay(1000);
 }
