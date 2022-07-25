@@ -31,7 +31,7 @@ void interruptInit() {
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(TRIG, OUTPUT);
   pinMode(ECHO, INPUT);
   pinMode(driverIn3, OUTPUT);
@@ -83,8 +83,8 @@ void distance_motor() {
     Serial.print("   ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("   ");
-    Serial.println(encoderPosRight);
+    Serial.print("  ");
+    Serial.println(rpm);
   }
   else if (distance < 20) {
     digitalWrite(driverIn3, HIGH);
@@ -93,8 +93,8 @@ void distance_motor() {
     Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("  ");
-    Serial.println(encoderPosRight);
+    Serial.print(" ");
+    Serial.println(rpm);
   }
   else if (distance < 30) {
     digitalWrite(driverIn3, HIGH);
@@ -103,8 +103,8 @@ void distance_motor() {
     Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("  ");
-    Serial.println(encoderPosRight);
+    Serial.print(" ");
+    Serial.println(rpm);
   }
   else if (distance < 100) {
     digitalWrite(driverIn3, HIGH);
@@ -114,7 +114,7 @@ void distance_motor() {
     Serial.print(distance);
     Serial.print("cm");
     Serial.print(" ");
-    Serial.println(encoderPosRight);
+    Serial.println(rpm);
   }
 
   else if (distance < 1000) {
@@ -125,7 +125,7 @@ void distance_motor() {
     Serial.print(distance);
     Serial.print("cm");
     Serial.print(" ");
-    Serial.println(encoderPosRight);
+    Serial.println(rpm);
   }
   else if (distance < 10000) {
     digitalWrite(driverIn3, HIGH);
@@ -134,7 +134,7 @@ void distance_motor() {
     Serial.print(distance);
     Serial.print("cm");
     Serial.print(" ");
-    Serial.println(encoderPosRight);
+    Serial.println(rpm);
   }
 
   else if (distance > 10000) {
@@ -145,8 +145,8 @@ void distance_motor() {
     Serial.print("   ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("   ");
-    Serial.println(encoderPosRight);
+    Serial.print("  ");
+    Serial.println(rpm);
   }
   delay(1000);
 }
