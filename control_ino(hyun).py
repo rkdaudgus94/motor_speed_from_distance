@@ -5,11 +5,11 @@ import numpy as np
 from drawnow import *
 
 
-port = '/dev/ttyACM0'
-brate = 9600
+port = 'COM3'
+brate = 115200
 ard = serial.Serial(port, brate)
 dis = []
-spd = []
+rpm = []
 t = []
 t0 = 0
 def show_plot() :
@@ -23,11 +23,11 @@ def show_plot() :
 
 
     plt.subplot(212)
-    plt.plot(t,spd,label='speed')
+    plt.plot(t,rpm,label='speed')
     plt.legend('speed(%)')
     plt.grid()
     plt.xlabel('t(sec)')
-    plt.ylabel('speed(%)')
+    plt.ylabel('rpm(rpm)')
     plt.ylim(0,100)
     
 
@@ -42,22 +42,23 @@ try :
         ard.write(num1) # num 의 값을 아두이노에 전송
         while num == '1' :
             data = ard.readline()
-            distance = data.decode()[:-8]
-            speed = data.decode()[-6:-2]
+            distance = data.decode()[:-10]
+            speed = data.decode()[8:-2]
             distance = float(distance)
-            if distance >= 40 :
-                distance = 40
-            speed = int(speed)
+            if distance >= 50 :
+                distance = 50
+            speed = float(speed)
             print(distance,"cm",speed,'(pwm)')
             dis = np.append(dis,distance)
-            spd = np.append(spd,speed)
+            rpm = np.append(rpm,speed)
             t0 = t0 + 1
             t = np.append(t, t0)
             
             drawnow(show_plot)
 except KeyboardInterrupt :
     num = 0
-    ard.write(num)
+    num1 = num.encode('utf-8')
+    ard.write(num1)
     print('end')
     exit()
     
