@@ -1,3 +1,7 @@
+
+#define encoderPinA  2
+#define encoderPinB 3
+
 #define TRIG 4
 #define ECHO 5
 
@@ -7,17 +11,38 @@
 
 int data;
 int pwm;
+float rpm;
 float distance;
+float encoderPosRight = 0;
 
 void distance_motor();
+void cal_rpm();
+
+void doEncoderA() {
+  encoderPosRight  += (digitalRead(encoderPinA) == digitalRead(encoderPinB)) ? 1 : -1;
+}
+void doEncoderB() {
+  encoderPosRight  += (digitalRead(encoderPinA) == digitalRead(encoderPinB)) ? -1 : 1;
+}
+
+void interruptInit() {
+  attachInterrupt(0, doEncoderA, CHANGE);   //uno pin 2
+  attachInterrupt(1, doEncoderB, CHANGE);   //uno pin 3
+}
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(TRIG, OUTPUT);
   pinMode(ECHO, INPUT);
   pinMode(driverIn3, OUTPUT);
   pinMode(driverIn4, OUTPUT);
   pinMode(driverPwmR, OUTPUT);
+  pinMode(encoderPinA, INPUT_PULLUP);
+  pinMode(encoderPinB, INPUT_PULLUP);
+  interruptInit();
+  digitalWrite(driverIn3, LOW);
+  digitalWrite(driverIn4, LOW);
+  analogWrite(driverPwmR, 0);
 }
 
 void loop() {
@@ -25,7 +50,9 @@ void loop() {
     data = Serial.read(); // 데이터를 읽어서 'data'를 저장
   }
   while (data == '1') {
+    cal_rpm();
     distance_motor();
+    
     if (Serial.available()) {
       data = Serial.read();
 
@@ -35,6 +62,9 @@ void loop() {
       }
     }
   }
+  digitalWrite(driverIn3, LOW);
+  digitalWrite(driverIn4, LOW);
+  analogWrite(driverPwmR, 0); // 100% Duty Cycle
 }
 
 void distance_motor() {
@@ -50,67 +80,61 @@ void distance_motor() {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 0); // 0% Duty Cycle
-    pwm = 0;
     Serial.print("   ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("   ");
-    Serial.println(pwm);
+    Serial.print("  ");
+    Serial.println(rpm);
   }
   else if (distance < 20) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 64); // 25% Duty Cycle
-    pwm = 25;
     Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("  ");
-    Serial.println(pwm);
+    Serial.print(" ");
+    Serial.println(rpm);
   }
   else if (distance < 30) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 127); // 50% Duty Cycle
-    pwm = 50 ;
     Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("  ");
-    Serial.println(pwm);
+    Serial.print(" ");
+    Serial.println(rpm);
   }
   else if (distance < 100) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 100;
     Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
     Serial.print(" ");
-    Serial.println(pwm);
+    Serial.println(rpm);
   }
 
   else if (distance < 1000) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 100;
     Serial.print(" ");
     Serial.print(distance);
     Serial.print("cm");
     Serial.print(" ");
-    Serial.println(pwm);
+    Serial.println(rpm);
   }
   else if (distance < 10000) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    pwm = 100;
     Serial.print(distance);
     Serial.print("cm");
     Serial.print(" ");
-    Serial.println(pwm);
+    Serial.println(rpm);
   }
 
   else if (distance > 10000) {
@@ -118,12 +142,18 @@ void distance_motor() {
     digitalWrite(driverIn3, LOW);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 0); // 100% Duty Cycle
-    pwm = 0;
     Serial.print("   ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("   ");
-    Serial.println(pwm);
+    Serial.print("  ");
+    Serial.println(rpm);
   }
-  delay(500);
+  delay(1000);
+}
+
+void cal_rpm() {
+  rpm = encoderPosRight / 57;
+  rpm *= 60;
+  rpm /= 90;
+  encoderPosRight = 0;
 }
