@@ -8,8 +8,8 @@ arduino = serial.Serial('com3', 115200, timeout = None)
 while True :
     setha = input("각도(setha)를 입력하시오 : ")
 
-    setha = setha.encode()
-    arduino.write(setha)
+    setha1 = setha.encode('utf-8')
+    arduino.write(setha1)
     data = arduino.readline()
     data = data.decode()
 
