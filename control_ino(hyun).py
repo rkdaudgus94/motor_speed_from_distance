@@ -42,19 +42,9 @@ try :
         ard.write(num1) # num 의 값을 아두이노에 전송
         while num == '1' :
             data = ard.readline()
-            if len(data) == 12 :
-                distance = data.decode()[:-8]
-                speed = data.decode()[-6:-2]
-                distance = float(distance)
-            elif len(data) == 13 :
-                distance = data.decode()[:-8]
-                speed = data.decode()[7:-2]
-                distance = float(distance)
-            elif len(data) == 14 :
-                distance = data.decode()[:-9]
-                speed = data.decode()[-7:-2]
-                distance = float(distance)
-            
+            distance = data.decode()[:-9] #30.00cm72.00
+            speed = data.decode()[7:-2]
+            distance = float(distance)
             speed = float(speed)
             print(distance,"cm",speed,'(pwm)')
             dis = np.append(dis,distance)
