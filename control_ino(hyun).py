@@ -54,7 +54,7 @@ try :
             
             drawnow(show_plot)
 except KeyboardInterrupt :
-    num = 0
+    num = '0'
     num1 = num.encode('utf-8')
     ard.write(num1)
     print('end')
