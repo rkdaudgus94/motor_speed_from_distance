@@ -74,7 +74,8 @@ void loop() {
 
 void setha_serial() {
   if (Serial.available() > 0) {
-    setha = Serial.parseFloat();
+    setha = Serial.read();
+    setha = float(setha);
   }
   if (setha < 0) {
     in3 = HIGH, in4 = LOW;
