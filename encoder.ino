@@ -1,7 +1,7 @@
 // 오른쪽 모터 엔코더 위치 제어
 
-#define encoderPinA  2 // 인터럽트에 쓸 수 있는 디지털 핀
-#define encoderPinB 3 // 인터럽트에 쓸 수 있는 디지털 핀
+#define encoderPinA  2 // 인터럽트에 쓸 수 있는 디지털 핀 // 파란색 2번
+#define encoderPinB 3 // 인터럽트에 쓸 수 있는 디지털 핀 // 보라색 3번
 
 #define driverIn3 9 // IN3
 #define driverIn4 10 // IN4
@@ -18,6 +18,7 @@ float control;
 
 int in3, in4;
 int pwm;
+int setha1;
 
 void doEncoderA() {
   encoderPosRight  += (digitalRead(encoderPinA) == digitalRead(encoderPinB)) ? 1 : -1;
@@ -48,9 +49,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  if (Serial.available() > 0) {
-  setha = Serial.parseFloat();
   Serial.print("setha : ");
   Serial.print(setha);
   Serial.print(" / right : ");
@@ -68,13 +66,14 @@ void loop() {
   Serial.print(error);
   Serial.print(" / control : ");
   Serial.println(control);
-
+  
   setha_serial();
-
-}
 }
 
 void setha_serial() {
+  if (Serial.available() > 0) {
+    setha = Serial.parseFloat();
+  }
   if (setha < 0) {
     in3 = HIGH, in4 = LOW;
 
@@ -84,7 +83,7 @@ void setha_serial() {
       digitalWrite(driverIn4, in4);
       analogWrite(driverPwmR, 0);
     }
-    Kp = 22.5;
+    Kp = 12; // DC Power supply 22.5
     digitalWrite(driverIn3, LOW);
     digitalWrite(driverIn4, LOW);
     delay(20);
@@ -101,7 +100,7 @@ void setha_serial() {
       digitalWrite(driverIn4, in4);
       analogWrite(driverPwmR, 0);
     }
-    Kp = 20;
+    Kp = 11; // DC Power supply 20
     digitalWrite(driverIn3, LOW);
     digitalWrite(driverIn4, LOW);
     delay(20);
@@ -122,6 +121,5 @@ void setha_serial() {
     setha = 0;
     motorDeg = 0;
     error = 0;
-
   }
 }
