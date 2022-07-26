@@ -49,6 +49,8 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  if (Serial.available() > 0) {
+  setha = Serial.parseFloat();
   Serial.print("setha : ");
   Serial.print(setha);
   Serial.print(" / right : ");
@@ -70,11 +72,9 @@ void loop() {
   setha_serial();
 
 }
+}
 
 void setha_serial() {
-  if (Serial.available() > 0) {
-    setha = Serial.parseFloat();
-  }
   if (setha < 0) {
     in3 = HIGH, in4 = LOW;
 
