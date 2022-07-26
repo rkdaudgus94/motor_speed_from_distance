@@ -1,4 +1,3 @@
-
 #define encoderPinA  2
 #define encoderPinB 3
 
@@ -80,72 +79,43 @@ void distance_motor() {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 0); // 0% Duty Cycle
-    Serial.print("   ");
+    Serial.print(" ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print("  ");
     Serial.println(rpm);
   }
   else if (distance < 20) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 64); // 25% Duty Cycle
-    Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print(" ");
     Serial.println(rpm);
   }
   else if (distance < 30) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 127); // 50% Duty Cycle
-    Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print(" ");
     Serial.println(rpm);
   }
-  else if (distance < 100) {
+  else if (distance < 50) {
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    Serial.print("  ");
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print(" ");
     Serial.println(rpm);
   }
 
-  else if (distance < 1000) {
-    digitalWrite(driverIn3, HIGH);
-    digitalWrite(driverIn4, LOW);
-    analogWrite(driverPwmR, 255); // 100% Duty Cycle
-    Serial.print(" ");
-    Serial.print(distance);
-    Serial.print("cm");
-    Serial.print(" ");
-    Serial.println(rpm);
-  }
-  else if (distance < 10000) {
+  else if (distance > 50) {
+    distance = 50;
     digitalWrite(driverIn3, HIGH);
     digitalWrite(driverIn4, LOW);
     analogWrite(driverPwmR, 255); // 100% Duty Cycle
     Serial.print(distance);
     Serial.print("cm");
-    Serial.print(" ");
-    Serial.println(rpm);
-  }
-
-  else if (distance > 10000) {
-    distance = pulseIn(ECHO, LOW);
-    digitalWrite(driverIn3, LOW);
-    digitalWrite(driverIn4, LOW);
-    analogWrite(driverPwmR, 0); // 100% Duty Cycle
-    Serial.print("   ");
-    Serial.print(distance);
-    Serial.print("cm");
-    Serial.print("  ");
     Serial.println(rpm);
   }
   delay(1000);
