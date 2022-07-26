@@ -1,4 +1,4 @@
-// 오른쪽 모터 엔코더 위치 제어 //
+// 오른쪽 모터 엔코더 위치 제어
 
 #define encoderPinA  2 // 인터럽트에 쓸 수 있는 디지털 핀
 #define encoderPinB 3 // 인터럽트에 쓸 수 있는 디지털 핀
@@ -10,10 +10,9 @@
 const float ratio = 360. / 90. / 52.;
 
 float encoderPosRight = 0;
-float setha = 0;
 float motorDeg = 0;
+float setha = 0;
 float error = 0;
-
 float Kp;
 float control;
 
@@ -74,8 +73,7 @@ void loop() {
 
 void setha_serial() {
   if (Serial.available() > 0) {
-    setha = Serial.read();
-    setha = float(setha);
+    setha = Serial.parseFloat();
   }
   if (setha < 0) {
     in3 = HIGH, in4 = LOW;
@@ -86,7 +84,7 @@ void setha_serial() {
       digitalWrite(driverIn4, in4);
       analogWrite(driverPwmR, 0);
     }
-    Kp = 13;
+    Kp = 22.5;
     digitalWrite(driverIn3, LOW);
     digitalWrite(driverIn4, LOW);
     delay(20);
@@ -103,7 +101,7 @@ void setha_serial() {
       digitalWrite(driverIn4, in4);
       analogWrite(driverPwmR, 0);
     }
-    Kp = 10.9;
+    Kp = 20;
     digitalWrite(driverIn3, LOW);
     digitalWrite(driverIn4, LOW);
     delay(20);
