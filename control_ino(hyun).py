@@ -5,7 +5,7 @@ import numpy as np
 from drawnow import *
 
 
-port = 'COM3'
+port = '/dev/ttyUSB0'
 brate = 115200
 ard = serial.Serial(port, brate)
 dis = []
