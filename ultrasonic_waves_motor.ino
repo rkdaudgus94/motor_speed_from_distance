@@ -124,6 +124,6 @@ void distance_motor() {
 void cal_rpm() {
   rpm = encoderPosRight / 57;
   rpm *= 60;
-  rpm /= 90;
+  rpm /= -90;
   encoderPosRight = 0;
 }
